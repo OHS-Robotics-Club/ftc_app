@@ -5,6 +5,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -20,7 +21,7 @@ public class HardwareBot {
     public boolean testBot;
     public BNO055IMU imu;
     public BlockVisionGRIP blockVision;
-    public DrivingUtils drive;
+    public DigitalChannel limitSwitch;
 
     /**
      * Initialize the Hardware Bot in
@@ -53,6 +54,9 @@ public class HardwareBot {
             sPickup = hardwareMap.servo.get("SpatuServo");
             sDump = hardwareMap.servo.get("dumpServo");
 
+            limitSwitch = hardwareMap.digitalChannel.get("limitSwitch");
+            limitSwitch.setMode(DigitalChannel.Mode.INPUT);
+
             mRightFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
             mRightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -60,6 +64,11 @@ public class HardwareBot {
             mHangingMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             mLiftExtender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             mHangingMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+            mRightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            mRightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            mLeftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            mLeftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
 
@@ -82,9 +91,8 @@ public class HardwareBot {
             blockVision.enable();
         }
 
-        // Initialize Utility Classes
-        drive = new DrivingUtils(this);
-
 
     }
+
+
 }
