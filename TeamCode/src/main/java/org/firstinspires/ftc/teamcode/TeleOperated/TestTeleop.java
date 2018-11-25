@@ -121,8 +121,8 @@ public class TestTeleop extends LinearOpMode {
             double strafingPower = 0.0;
             double lPower, rPower;
 
-            lPower = -Range.clip((gamepad1.left_stick_y), -1.0, 1.0);
-            rPower = -Range.clip((gamepad1.right_stick_y), -1.0, 1.0);
+            lPower = Range.clip((gamepad1.left_stick_y), -1.0, 1.0);
+            rPower = Range.clip((gamepad1.right_stick_y), -1.0, 1.0);
 
             if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
                 pressedOnce = true;

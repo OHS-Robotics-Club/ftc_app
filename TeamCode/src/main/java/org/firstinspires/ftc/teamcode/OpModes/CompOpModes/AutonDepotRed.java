@@ -8,7 +8,8 @@ import org.firstinspires.ftc.teamcode.Utils.DrivingUtils;
 import org.firstinspires.ftc.teamcode.Utils.GyroUtils;
 
 public class AutonDepotRed extends LinearOpMode {
-    HardwareBot bot;
+
+    HardwareBot bot = new HardwareBot();
     DrivingUtils drive;
     CameraUtils camera;
     GyroUtils gyro;
@@ -43,17 +44,24 @@ public class AutonDepotRed extends LinearOpMode {
 
         //Drive Forward
         //TODO Find Encoder Distance and Use Encoder
-        drive.driveUniform(0.4);
-        sleep(2000);
-        drive.stop();
+        drive.driveUniform(0.4, 37.5);
+
+        //sleep(2000);
+        //drive.stop();
 
         //Drive Forward More
         //TODO Find Encoder Value
-        drive.driveUniform(0.5);
-        sleep(2000);
-        drive.stop();
+        drive.driveUniform(0.5, 8);
+
+        //sleep(2000);
+        //drive.stop();
 
         BlockPosition pos = BlockPosition.CENTER;
+        if(turnedAngle < 70){
+            pos = BlockPosition.RIGHT;
+        } else if(turnedAngle > 100){
+            pos = BlockPosition.LEFT;
+        }
         //Returns Enum Value
 
         //Robot Perspective
@@ -62,28 +70,25 @@ public class AutonDepotRed extends LinearOpMode {
             case CENTER:
                 // Drive Forward
                 //TODO Find Encoder Value
-                drive.driveUniform(0.5);
-                sleep(2000);
-                drive.stop();
+                drive.driveUniform(0.5,6);
 
                 //TODO Find Continous Servo Values
                 //Dump Our Marker (COW)
                 bot.sPickup.setPosition(0.7);
                 sleep(500);
                 bot.sPickup.setPosition(0.5);
+
+                //Go Backwards
+                drive.driveUniform(-0.5, 8);
                 break;
 
             case LEFT:
                 //TODO Turn Based On Gyro Measure or Direction
-                drive.tankRight(0.3);
-                sleep(1000);
-                drive.stop();
+                gyro.turnDegrees(30,0.4);
 
                 // Drive Forward
                 //TODO Find Encoder Value
-                drive.driveUniform(0.5);
-                sleep(2000);
-                drive.stop();
+                drive.driveUniform(0.5, 8);
 
                 //TODO Find Continous Servo Values
                 //Dump Our Marker (COW)
@@ -91,31 +96,30 @@ public class AutonDepotRed extends LinearOpMode {
                 sleep(500);
                 bot.sPickup.setPosition(0.5);
 
+                //Go Backwards
+                drive.driveUniform(-0.5, 8);
                 break;
+
             case RIGHT:
 
                 //TODO Turn Based On Gyro Measure or Direction
-                drive.tankLeft(0.3);
-                sleep(1000);
-                drive.stop();
+                gyro.turnDegrees(-60, 0.4);
 
                 // Drive Forward
                 //TODO Find Encoder Value
-                drive.driveUniform(0.5);
-                sleep(2000);
-                drive.stop();
+                drive.driveUniform(0.5, 8);
 
                 //TODO Find Continous Servo Values
                 //Dump Our Marker (COW)
                 bot.sPickup.setPosition(0.7);
                 sleep(500);
                 bot.sPickup.setPosition(0.5);
+
+                //Go Backwards
+                drive.driveUniform(-0.5, 8);
+
                 break;
         }
-
-
-
-
 
 
     }
