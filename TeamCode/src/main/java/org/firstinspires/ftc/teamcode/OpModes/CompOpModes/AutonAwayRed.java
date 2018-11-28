@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.CompOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HardwareBot;
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Utils.CameraUtils;
 import org.firstinspires.ftc.teamcode.Utils.DrivingUtils;
 import org.firstinspires.ftc.teamcode.Utils.GyroUtils;
 
+@Autonomous(name="AutonAwayRed", group="Competition")
 public class AutonAwayRed extends LinearOpMode {
     HardwareBot bot;
     DrivingUtils drive;

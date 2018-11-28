@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes.CompOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.HardwareBot;
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Utils.CameraUtils;
 import org.firstinspires.ftc.teamcode.Utils.DrivingUtils;
 import org.firstinspires.ftc.teamcode.Utils.GyroUtils;
 
+@Autonomous(name="AutonDepotRed", group="Competition")
 public class AutonDepotRed extends LinearOpMode {
 
     HardwareBot bot = new HardwareBot();
@@ -28,6 +30,10 @@ public class AutonDepotRed extends LinearOpMode {
         gyro = new GyroUtils(bot, this);
 
         waitForStart();
+
+        if (bot.tfod != null) {
+            bot.tfod.activate();
+        }
 
         //Descend (Drive Rack Motor)
         //TODO Write Limit Switch Based Descend Method

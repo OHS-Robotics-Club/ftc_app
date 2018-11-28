@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpModes.CompOpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.HardwareBot;
 import org.firstinspires.ftc.teamcode.Utils.DrivingUtils;
 
+@TeleOp(name="Tele Op Comp", group="Competition")
 public class TeleOpComp extends LinearOpMode {
 
     final double HANG_POWER = 0.9;
@@ -150,8 +153,8 @@ public class TeleOpComp extends LinearOpMode {
             double strafingPower = 0.0;
             double lPower, rPower;
 
-            lPower = Range.clip((gamepad1.left_stick_y), -1.0, 1.0);
-            rPower = Range.clip((gamepad1.right_stick_y), -1.0, 1.0);
+            lPower = -Range.clip((gamepad1.left_stick_y), -1.0, 1.0);
+            rPower = -Range.clip((gamepad1.right_stick_y), -1.0, 1.0);
 
             if (gamepad1.left_trigger > 0) { // Strafe left
 

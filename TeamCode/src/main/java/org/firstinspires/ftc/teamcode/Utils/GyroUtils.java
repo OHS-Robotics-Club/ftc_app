@@ -34,6 +34,7 @@ public class GyroUtils {
         double initialAngle = angles.firstAngle;
         double targetAngle = initialAngle + degrees;
         if (targetAngle < initialAngle) {
+            drive.tankRight(turnPower);
             while (angles.firstAngle > targetAngle && opMode.opModeIsActive()) {
                 angles = bot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
                 opMode.idle();

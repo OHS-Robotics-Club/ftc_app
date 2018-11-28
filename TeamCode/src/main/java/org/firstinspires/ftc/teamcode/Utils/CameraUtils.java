@@ -8,11 +8,21 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+
 public class CameraUtils {
+    private static final String GOLD_LABEL = "Gold Mineral";
+    private static final String SILVER_LABEL = "Silver Mineral";
+
     private HardwareBot bot;
     private LinearOpMode opMode;
+    private DrivingUtils drive;
 
     /**
      * CameraUtils constructor to great Utils Object
@@ -22,6 +32,7 @@ public class CameraUtils {
     public CameraUtils(HardwareBot bot, LinearOpMode opMode){
         this.bot = bot;
         this.opMode = opMode;
+        drive = new DrivingUtils(bot, opMode);
     }
 
     /**
@@ -74,6 +85,37 @@ public class CameraUtils {
                             String.format(Locale.getDefault(), "(%d, %d)", (boundingRect.x + boundingRect.width) / 2, (boundingRect.y + boundingRect.height) / 2));
                     opMode.telemetry.update();
                 }
+            }
+        }
+
+    }
+
+    public void cameraBlockTFODPivot(double power){
+
+        boolean foundBlock = false;
+        int imageMid = 0;
+        int buffer = 10;
+
+        bot.mRightFrontMotor.setPower(-power);
+        bot.mRightBackMotor.setPower(-power);
+
+        bot.mLeftBackMotor.setPower(power);
+        bot.mLeftFrontMotor.setPower(power);
+
+        while (opMode.opModeIsActive() && !(foundBlock)) {
+            List<Recognition> updatedRecognitions = bot.tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+
+                opMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
+                for (Recognition recognition : updatedRecognitions) {
+                    opMode.telemetry.addData("Object: ", recognition.getLabel());
+                    if(recognition.getLabel().equals(GOLD_LABEL)){
+                        if((recognition.getLeft() > imageMid + buffer) && recognition.getLeft() < imageMid - buffer){
+                            drive.stop();
+                        }
+                    }
+                }
+                opMode.telemetry.update();
             }
         }
 
