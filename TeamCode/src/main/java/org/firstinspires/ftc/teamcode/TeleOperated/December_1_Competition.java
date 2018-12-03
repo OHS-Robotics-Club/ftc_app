@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "Oly_Cow_Telop", group = "Comp")
-public class TestTeleop extends LinearOpMode {
+@TeleOp(name = "December 1 Competition", group = "Comp")
+public class December_1_Competition extends LinearOpMode {
 
     final double HANG_POWER = 0.9;
     final double STOP_POWER = 0.0;

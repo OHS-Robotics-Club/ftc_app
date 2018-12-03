@@ -111,13 +111,15 @@ public class CameraUtils {
                     opMode.telemetry.addData("Object: ", recognition.getLabel());
                     if(recognition.getLabel().equals(GOLD_LABEL)){
                         if((recognition.getLeft() > imageMid + buffer) && recognition.getLeft() < imageMid - buffer){
-                            drive.stop();
+                            foundBlock = true;
                         }
                     }
                 }
                 opMode.telemetry.update();
             }
         }
+
+        drive.stop();
 
     }
 
