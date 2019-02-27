@@ -110,16 +110,42 @@ public class CameraUtils {
                 for (Recognition recognition : updatedRecognitions) {
                     opMode.telemetry.addData("Object: ", recognition.getLabel());
                     if(recognition.getLabel().equals(GOLD_LABEL)){
-                        if((recognition.getLeft() > imageMid + buffer) && recognition.getLeft() < imageMid - buffer){
-                            foundBlock = true;
-                        }
+                        drive.stop();
+                        return;
                     }
                 }
                 opMode.telemetry.update();
             }
         }
 
-        drive.stop();
+    }
+
+    public void cameraBlockStrafe(double strafingPower){
+
+        boolean foundBlock = false;
+        int imageMid = 0;
+        int buffer = 10;
+
+        bot.mLeftFrontMotor.setPower(strafingPower);
+        bot.mLeftBackMotor.setPower(-strafingPower);
+        bot.mRightFrontMotor.setPower(-strafingPower);
+        bot.mRightBackMotor.setPower(strafingPower);
+
+        while (opMode.opModeIsActive()) {
+            List<Recognition> updatedRecognitions = bot.tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+
+                opMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
+                for (Recognition recognition : updatedRecognitions) {
+                    opMode.telemetry.addData("Object: ", recognition.getLabel());
+                    if(recognition.getLabel().equals(GOLD_LABEL)){
+                        drive.stop();
+                        return;
+                    }
+                }
+                opMode.telemetry.update();
+            }
+        }
 
     }
 
